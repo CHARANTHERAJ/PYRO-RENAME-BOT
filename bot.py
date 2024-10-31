@@ -9,7 +9,7 @@ class HealthCheckHandler(BaseHTTPRequestHandler):
         self.wfile.write(b"Bot is alive!")
 
 def start_server():
-    port = int(os.environ.get("PORT", 8000))  # Use Koyeb's specified port if available
+    port = int(os.environ.get("PORT", 8090))  # Use Koyeb's specified port if available
     server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
     server.serve_forever()
 
