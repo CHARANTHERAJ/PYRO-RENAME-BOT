@@ -1,3 +1,24 @@
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import threading
+
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"Bot is alive!")
+
+def start_server():
+    port = int(os.environ.get("PORT", 8000))  # Use Koyeb's specified port if available
+    server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
+    server.serve_forever()
+
+# Start the health check server in a separate thread
+threading.Thread(target=start_server).start()
+
+# Your bot's main code
+# Import necessary libraries and initialize your bot here
+
 from datetime import datetime
 from pytz import timezone
 from pyrogram import Client, __version__
